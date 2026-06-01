@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const userRouter = require('./routes/userRoutes');
 
 
 const app = express();
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-
+app.use('/api/v1/users', userRouter);
 
 app.get('/', (req, res) => {
   res.send('Server running');
