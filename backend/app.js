@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const userRouter = require('./routes/userRoutes');
-
+const projectRouter = require('./routes/projectRoutes');
 
 const app = express();
 
@@ -32,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/projects', projectRouter);
 
 app.get('/', (req, res) => {
   res.send('Server running');
