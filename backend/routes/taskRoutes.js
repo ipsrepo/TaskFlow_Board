@@ -28,7 +28,12 @@ router
         TaskController.deleteTask,
     );
 
-router.patch('/:id/status', updateTaskStatus);
+router.patch('/:id/status', TaskController.updateTaskStatus);
 router.get('/my-tasks', TaskController.getMyTasks);
+
+router.post('/:id/comments', TaskController.addComment);
+
+router.get('/project/:projectId/kanban', TaskController.getKanbanTasks);
+router.get('/project/:projectId', TaskController.getProjectTasks);
 
 module.exports = router;

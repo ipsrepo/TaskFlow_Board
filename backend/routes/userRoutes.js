@@ -19,4 +19,9 @@ router
   .get(userController.getUser)
   .delete(userController.deleteUser);
 
+router
+.route('/profile')
+    .get(userController.getProfile)
+    .put(userController.updateProfile)
+
 module.exports = router;

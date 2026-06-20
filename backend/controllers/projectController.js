@@ -2,6 +2,7 @@ const Project = require('../models/projectModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const {getProjectbasedId, saveAndPopulate, getStatusBoard} = require("../utils/utils");
 
 // exports.createProject = factory.createOne(Project);
 exports.getAllProjects = factory.getAll(Project);
@@ -11,7 +12,7 @@ exports.deleteProject = factory.deleteOne(Project);
 
 
 exports.createProject = catchAsync(async (req, res, next) => {
-    const { name, description, members, startDate, endDate } = req.body;
+    const {name, description, members, startDate, endDate} = req.body;
 
     // Validation
     if (!name || !description || !startDate || !endDate) {
@@ -50,3 +51,81 @@ exports.createProject = catchAsync(async (req, res, next) => {
         },
     });
 });
+
+exports.addMember = catchAsync(async (req, res, next) => {
+
+    const project = await getProjectbasedId(req.params.id);
+
+    const {userId} = req.body;
+    if (!userId) return res.status(400).json({success: false, message: 'User ID is required'});
+
+    if (project.members.includes(userId)) {
+        return res.status(400).json({success: false, message: 'User is already a member'});
+    }
+
+    project.members.push(userId);
+    await saveAndPopulate(project);
+
+    res.json({success: true, project});
+});
+
+exports.removeMember = catchAsync(async (req, res, next) => {
+
+    const project = await getProjectbasedId(req.params.id);
+
+    project.members = project.members.filter(m => m.toString() !== req.params.userId);
+
+    await saveAndPopulate(project);
+
+    res.json({success: true, project});
+})
+
+exports.getStatusBoards = catchAsync(async (req, res, next) => {
+    const project = await getProjectbasedId(req.params.id);
+
+    const boards = project.statusBoards.sort((a, b) => a.order - b.order);
+    res.json({success: true, statusBoards: boards});
+})
+
+exports.createStatusBoard = catchAsync(async (req, res, next) => {
+    const project = await getProjectbasedId(req.params.id);
+
+    const {name, color} = req.body;
+    if (!name || !color) return res.status(400).json({success: false, message: 'Name and color are required'});
+
+    const exists = project.statusBoards.find(b => b.name.toLowerCase() === name.toLowerCase());
+    if (exists) return res.status(400).json({success: false, message: 'Status board with this name already exists'});
+
+    const maxOrder = Math.max(...project.statusBoards.map(b => b.order), -1);
+    project.statusBoards.push({name, color, order: maxOrder + 1, isDefault: false});
+
+    await project.save();
+    res.status(201).json({success: true, statusBoards: project.statusBoards});
+})
+
+exports.updateStatusBoard = catchAsync(async (req, res, next) => {
+    const project = await getProjectbasedId(req.params.id);
+
+    const board = getStatusBoard(project, req.params.boardName);
+
+    const {name, color, order} = req.body;
+    if (name) board.name = name;
+    if (color) board.color = color;
+    if (order !== undefined) board.order = order;
+
+    await project.save();
+    res.json({success: true, statusBoards: project.statusBoards});
+});
+
+exports.deleteStatusBoard = catchAsync(async (req, res, next) => {
+    const project = await getProjectbasedId(req.params.id);
+
+    const board = getStatusBoard(project, req.params.boardName);
+
+    if (board.isDefault) return res.status(400).json({success: false, message: 'Cannot delete default status boards'});
+
+    project.statusBoards = project.statusBoards.filter(b => b.name !== req.params.boardName);
+    await project.save();
+
+    res.json({success: true, message: 'Status board deleted', statusBoards: project.statusBoards});
+})
