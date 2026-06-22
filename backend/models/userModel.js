@@ -59,6 +59,17 @@ const userSchema = new mongoose.Schema({
     }
 );
 
+// Middleware - Run only when password modified
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return;
+    console.log(`Testing - before password ${this.password}`);
+
+    this.password = await bcrypt.hash(this.password, 12); // Hash the password with cost 12
+    this.passwordConfirm = undefined;
+    console.log(`Testing - after password ${this.password}`);
+    next();
+});
+
 userSchema.pre(/^find/, function (next) {
     console.log('Run before query execution');
     this.find({active: {$ne: false}});
