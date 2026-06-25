@@ -7,21 +7,23 @@ const router = express.Router();
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
-// Middleware to give access to only admin
-// router.use(authController.restrictTo('admin'));
+router.use(authController.protectRoute);
 
 router
-  .route('/')
-  .get(userController.getAllUsers)
-
-router
-  .route('/:id')
-  .get(userController.getUser)
-  .delete(userController.deleteUser);
-
-router
-.route('/profile')
+    .route('/profile')
     .get(userController.getProfile)
-    .put(userController.updateProfile)
+    .put(userController.updateProfile);
+
+router
+    .route('/')
+    .get(userController.getAllUsers);
+
+router
+    .route('/:id')
+    .get(userController.getUser)
+    .delete(userController.deleteUser)
+
+router.put('/:id/role', authController.restrictTo('admin'),
+    userController.changeRole);
 
 module.exports = router;
