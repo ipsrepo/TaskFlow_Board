@@ -1,72 +1,75 @@
-import { createContext, useCallback, useState } from "react";
-import * as taskService from "../services/task.service";
+import { createContext, useCallback, useState } from 'react';
+import * as taskService from '../services/task.service';
 
 export const TaskContext = createContext(null);
 
+const getTask = (response) => response?.task || response?.data?.task || response?.data;
+const getTasks = (response) => response?.tasks || response?.data?.tasks || [];
+
 export const TaskProvider = ({ children }) => {
-    const [tasks, setTasks] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const fetchTasks = useCallback(async (projectId, filters) => {
-        setLoading(true);
-        try {
-            const res = await taskService.getTasks(projectId, filters);
-            if (res.success) setTasks(res.data.tasks || []);
-            return res;
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+  const fetchTasks = useCallback(async (projectId, filters) => {
+    setLoading(true);
+    const response = await taskService.getTasks(projectId, filters);
+    if (response?.success) setTasks(getTasks(response));
+    setLoading(false);
+    return response;
+  }, []);
 
-    const createTask = useCallback(async (data) => {
-        const res = await taskService.createTask(data);
-        if (res.success) {
-            setTasks((p) => [res.data.task, ...p]);
-        }
-        return res;
-    }, []);
+  const fetchTask = useCallback(async (taskId) => {
+    const response = await taskService.getTask(taskId);
+    return response?.success ? getTask(response) : undefined;
+  }, []);
 
-    const updateTask = useCallback(async (id, data) => {
-        const res = await taskService.updateTask(id, data);
-        if (res.success) {
-            setTasks((p) =>
-                p.map((t) => (t._id === id ? res.data.task : t))
-            );
-        }
-        return res;
-    }, []);
+  const createTask = useCallback(async (taskData) => {
+    const response = await taskService.createTask(taskData);
+    const task = getTask(response);
+    if (response?.success && task) setTasks((current) => [task, ...current]);
+    return response;
+  }, []);
 
-    const deleteTask = useCallback(async (id) => {
-        const res = await taskService.deleteTask(id);
-        if (res.success) {
-            setTasks((p) => p.filter((t) => t._id !== id));
-        }
-        return res;
-    }, []);
+  const getMyTasks = useCallback(async (filters) => {
+    setLoading(true);
+    const response = await taskService.getMyTasks(filters);
+    if (response?.success) setTasks(getTasks(response));
+    setLoading(false);
+    return response;
+  }, []);
 
-    const updateTaskStatus = useCallback(async (id, status) => {
-        const res = await taskService.updateTaskStatus(id, status);
-        if (res.success) {
-            setTasks((p) =>
-                p.map((t) => (t._id === id ? res.data.task : t))
-            );
-        }
-        return res;
-    }, []);
+  const updateTask = useCallback(async (taskId, taskData) => {
+    const response = await taskService.updateTask(taskId, taskData);
+    const task = getTask(response);
+    if (response?.success && task) setTasks((current) => current.map((item) => item._id === taskId ? task : item));
+    return response;
+  }, []);
 
-    return (
-        <TaskContext.Provider
-            value={{
-                tasks,
-                loading,
-                fetchTasks,
-                createTask,
-                updateTask,
-                deleteTask,
-                updateTaskStatus,
-            }}
-        >
-            {children}
-        </TaskContext.Provider>
-    );
+  const deleteTask = useCallback(async (taskId) => {
+    const response = await taskService.deleteTask(taskId);
+    if (response?.success) setTasks((current) => current.filter((item) => item._id !== taskId));
+    return response;
+  }, []);
+
+  const updateTaskStatus = useCallback(async (taskId, status) => {
+    const response = await taskService.updateTaskStatus(taskId, status);
+    const task = getTask(response);
+    if (response?.success && task) setTasks((current) => current.map((item) => item._id === taskId ? task : item));
+    return response;
+  }, []);
+
+  const addComment = useCallback(async (taskId, text) => {
+    const response = await taskService.addComment(taskId, text);
+    const task = getTask(response);
+    if (response?.success && task) setTasks((current) => current.map((item) => item._id === taskId ? task : item));
+    return response;
+  }, []);
+
+  const fetchKanban = useCallback(async (projectId) => taskService.getKanban(projectId), []);
+
+  return (
+    <TaskContext.Provider value={{ tasks, loading, fetchTasks, fetchTask, getMyTasks, createTask, updateTask, deleteTask, updateTaskStatus, addComment, fetchKanban }}>
+      {children}
+    </TaskContext.Provider>
+  );
 };
