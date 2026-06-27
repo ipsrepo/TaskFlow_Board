@@ -4,12 +4,16 @@ import requestHandler from "../utils/requestHandler";
 const API = "/tasks";
 
 export const getTasks = (projectId, filters = {}) => {
-    const params = new URLSearchParams(filters).toString();
+    // const params = new URLSearchParams(filters).toString();
 
     return requestHandler(() =>
-        api.get(`${API}/project/${projectId}?${params}`)
+        api.get(`${API}/project/${projectId}`)
     );
 };
+export const getTask = (taskId = {}) =>
+    requestHandler(() =>
+        api.get(`${API}/${taskId}`)
+    );
 
 export const getMyTasks = (filters = {}) => {
     const params = new URLSearchParams(filters).toString();
@@ -36,7 +40,7 @@ export const updateTask = (id, taskData) =>
 
 export const updateTaskStatus = (id, status) =>
     requestHandler(() =>
-        api.patch(`${API}/${id}/status`, { status })
+        api.patch(`${API}/${id}/status`, {status})
     );
 
 export const deleteTask = (id) =>
@@ -46,5 +50,5 @@ export const deleteTask = (id) =>
 
 export const addComment = (taskId, text) =>
     requestHandler(() =>
-        api.post(`${API}/${taskId}/comments`, { text })
+        api.post(`${API}/${taskId}/comments`, {text})
     );
