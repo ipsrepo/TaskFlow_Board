@@ -16,7 +16,7 @@ import Input from '../UI/Input';
 import Loading from '../UI/Loading';
 import Modal from '../UI/Modal';
 import ProjectForm from './ProjectForm';
-import StatusBoardManager from '../kanban/StatusBoardManager.jsx';
+import StatusBoardManager from '../Kanban/StatusBoardManager.jsx';
 import {ADMIN, LEAD} from "../Common/constants.js";
 
 const statusVariants = {
