@@ -7,9 +7,33 @@ const {getProjectbasedId, saveAndPopulate, getStatusBoard} = require("../utils/u
 // exports.createProject = factory.createOne(Project);
 exports.getAllProjects = factory.getAll(Project);
 exports.updateProject = factory.updateOne(Project);
-exports.getProject = factory.getOne(Project);
 exports.deleteProject = factory.deleteOne(Project);
 
+
+
+exports.getProject = catchAsync(async (req, res, next) => {
+    const project = await Project.findById(req.params.id)
+        .populate({
+            path: 'members',
+            select: 'name email'
+        })
+        .populate({
+            path: 'leadId',
+            select: 'name email'
+        })
+        .populate({
+            path: 'statusBoards'
+        });
+
+    if (!project) {
+        return next(new AppError('No project found with that ID', 404));
+    }
+
+    res.status(200).json({
+        success: true,
+        project,
+    });
+});
 
 exports.createProject = catchAsync(async (req, res, next) => {
     const {name, description, members, startDate, endDate} = req.body;
@@ -44,7 +68,7 @@ exports.createProject = catchAsync(async (req, res, next) => {
     await project.populate('leadId members', 'name email role avatar');
 
     res.status(201).json({
-        status: 'success',
+        success: true,
         message: 'Project created successfully',
         data: {
             project,
@@ -53,7 +77,6 @@ exports.createProject = catchAsync(async (req, res, next) => {
 });
 
 exports.addMember = catchAsync(async (req, res, next) => {
-
     const project = await getProjectbasedId(req.params.id);
 
     const {userId} = req.body;

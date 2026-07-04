@@ -24,7 +24,7 @@ const createSendToken = (user, statusCode, res) => {
     res.cookie('jwt', token, cookieOptions);
     user.password = undefined; // Remove the password from the output.
     res.status(statusCode).json({
-        status: 'success',
+        success: true,
         token,
         data: {
             user,
@@ -36,7 +36,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     const newUser = await User.create({
         name: req.body.name,
         email: req.body.email,
-        mobile: req.body.mobile,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
         role: req.body.role,
@@ -47,12 +46,17 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
     const {email, password} = req.body;
 
+    console.log(req.body);
+
     // 1) Check the email and password exists
     if (!email || !password)
         return next(new AppError('Please provide email and password', 400));
 
     // 2) Verify the email and password
     const user = await User.findOne({email}).select('+password');
+
+    console.log(user)
+
 
     // User has access for methods validatePassword
     if (!user || !(await user.validatePassword(password, user.password))) {

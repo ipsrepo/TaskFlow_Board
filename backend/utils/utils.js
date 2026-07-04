@@ -31,3 +31,14 @@ exports.getStatusBoard = (project, boardName) => {
     if (!board) return res.status(404).json({success: false, message: 'Status board not found'});
     return board;
 };
+
+exports.filterObj = (body, ...filteredKeys) => {
+    const newObj = {};
+    Object.keys(body).forEach((key) => {
+        if (filteredKeys.includes(key)) {
+            newObj[key] = body[key];
+        }
+    });
+
+    return body;
+};

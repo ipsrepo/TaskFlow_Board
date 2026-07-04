@@ -9,7 +9,7 @@ exports.createOne = (Model) =>
         const newDoc = await Model.create(req.body);
 
         res.status(201).json({
-            status: 'success',
+            success: true,
             data: {
                 newDoc,
             },
@@ -31,7 +31,7 @@ exports.updateOne = (Model) =>
         }
 
         res.status(201).json({
-            status: 'success',
+            success: true,
             data: {
                 doc,
             },
@@ -48,7 +48,7 @@ exports.deleteOne = (Model) =>
             );
         }
         res.status(200).json({
-            status: 'success',
+            success: true,
             data: 'Document removed successfully',
         });
     });
@@ -57,18 +57,16 @@ exports.getOne = (Model, PopulateOptions) =>
     catchAsync(async (req, res, next) => {
         let query = Model.findById(req.params.id);
         if (PopulateOptions) query = query.populate(PopulateOptions);
-        const doc = await query;
+        const data = await query;
 
-        if (!doc) {
+        if (!data) {
             return next(
                 new AppError(`No document found for the ID ${req.params.id}`, 404),
             );
         }
-        res.status(201).json({
-            status: 'success',
-            data: {
-                doc,
-            },
+        res.status(200).json({
+            success: true,
+            data
         });
     });
 
@@ -87,7 +85,7 @@ exports.getAll = (Model) =>
         const data = await features.query;
 
         res.status(200).json({
-            status: 'success',
+            success: true,
             length: data.length,
             data,
         });

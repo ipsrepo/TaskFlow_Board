@@ -17,11 +17,6 @@ const userSchema = new mongoose.Schema({
             required: [true, 'Email is required'],
             validate: [validator.isEmail, 'email should be valid'],
         },
-        mobile: {
-            type: String,
-            unique: true,
-            required: [true, 'Mobile number is required'],
-        },
         password: {
             type: String,
             required: [true, 'password is required'],
@@ -46,10 +41,9 @@ const userSchema = new mongoose.Schema({
             enum: ['member', 'lead', 'admin'],
             default: 'member',
         },
-        active: {
+        isActive: {
             type: Boolean,
             default: true,
-            select: false,
         },
     },
     {

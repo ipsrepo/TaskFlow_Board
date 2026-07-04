@@ -16,6 +16,8 @@ router
         TaskController.createTask,
     );
 
+router.get('/my-tasks', TaskController.getMyTasks);
+
 router
     .route('/:id')
     .get(TaskController.getTask)
@@ -29,7 +31,6 @@ router
     );
 
 router.patch('/:id/status', TaskController.updateTaskStatus);
-router.get('/my-tasks', TaskController.getMyTasks);
 
 router.post('/:id/comments', TaskController.addComment);
 

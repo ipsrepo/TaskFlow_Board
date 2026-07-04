@@ -19,7 +19,7 @@ router
 router
     .route('/:id')
     .get(ProjectController.getProject)
-    .patch(
+    .put(
         authController.restrictTo('lead', 'admin'),
         ProjectController.updateProject,
     )

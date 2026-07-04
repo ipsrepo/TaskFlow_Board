@@ -48,6 +48,34 @@ exports.getMyTasks = catchAsync(async (req, res, next) => {
     res.json({success: true, tasks});
 })
 
+exports.getTask = catchAsync(async (req, res) => {
+    const task = await Task.findById(req.params.id)
+        .populate({
+            path: 'assignedTo',
+            select: 'name email role avatar',
+        })
+        .populate({
+            path: 'createdBy',
+            select: 'name email role avatar',
+        })
+        .populate({
+            path: 'comments.userId',
+            select: 'name email role avatar',
+        });
+
+    if (!task) {
+        return res.status(404).json({
+            success: false,
+            message: 'Task not found',
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: task,
+    });
+});
+
 exports.updateTaskStatus = catchAsync(async (req, res, next) => {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({success: false, message: 'Task not found'});
@@ -136,5 +164,4 @@ exports.getProjectTasks = catchAsync(async (req, res, next) => {
 
 exports.getAllTasks = factory.getAll(Task);
 exports.updateTask = factory.updateOne(Task);
-exports.getTask = factory.getOne(Task);
 exports.deleteTask = factory.deleteOne(Task);
