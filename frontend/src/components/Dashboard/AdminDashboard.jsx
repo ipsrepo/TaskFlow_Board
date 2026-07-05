@@ -9,19 +9,21 @@ import EmptyState from '../UI/EmptyState';
 import Icon from '../UI/Icon';
 import {CardSkeleton} from '../UI/Loading';
 import StatCard from '../UI/StatCard';
+import useAuth from "../../hooks/useAuth.js";
 
 const roleVariants = {admin: 'danger', lead: 'warning', member: 'primary'};
 
 const AdminDashboard = () => {
     const {fetchProjects, projects} = useProject();
-    const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const {
+        allUsers: users = [],
+        getAllUsers,
+        loading: isLoading,
+    } = useAuth();
 
     useEffect(() => {
         const loadDashboard = async () => {
-            const [, userResponse] = await Promise.all([fetchProjects(), api.get('/users').catch(() => null)]);
-            setUsers(userResponse?.data?.users || userResponse?.data?.data || []);
-            setIsLoading(false);
+            const [, userResponse] = await Promise.all([fetchProjects(), getAllUsers()]);
         };
         loadDashboard();
     }, [fetchProjects]);
@@ -86,8 +88,7 @@ const AdminDashboard = () => {
                                    size="sm">{candidate.role}</Badge></div>)}</Card> :
                         <div className="panel"><EmptyState title="No users yet" icon="users"/></div>}</aside>
             </section>
-        </div>
-    );
+        </div>);
 };
 
 export default AdminDashboard;

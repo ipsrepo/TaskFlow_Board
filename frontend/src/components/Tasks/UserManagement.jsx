@@ -13,6 +13,7 @@ import { CardSkeleton } from '../UI/Loading';
 import Modal from '../UI/Modal';
 import Select from '../UI/Select';
 import StatCard from '../UI/StatCard';
+import {updateRole} from "../../services/auth.service.js";
 
 const roleVariants = {
   admin: 'danger',
@@ -36,10 +37,6 @@ const getUpdatedUser = (data) => {
 };
 
 const UserManagement = () => {
-  const { user: currentUser } = useAuth();
-
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [feedback, setFeedback] = useState(null);
@@ -50,27 +47,19 @@ const UserManagement = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [modalError, setModalError] = useState('');
 
-  const loadUsers = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      const { data } = await api.get('/users');
-      setUsers(data.users || data.data || []);
-    } catch (error) {
-      setFeedback({
-        type: 'error',
-        message:
-            error.response?.data?.message ||
-            'Unable to load workspace users.',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const {
+    allUsers: users,
+    user: currentUser,
+    getAllUsers,
+    deleteUser,
+    updateRole,
+    loading: isLoading,
+  } = useAuth();
 
   useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
+    getAllUsers();
+  }, [getAllUsers]);
+
 
   const filteredUsers = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase();
@@ -118,64 +107,42 @@ const UserManagement = () => {
     setIsModalOpen(false);
   };
 
-  const updateRole = async () => {
-    if (!selectedUser || selectedRole === selectedUser.role) {
-      closeUserModal();
-      return;
-    }
-
-    const previousUsers = users;
-
-    setIsSaving(true);
-    setModalError('');
-
-    setUsers((currentUsers) =>
-        currentUsers.map((candidate) =>
-            candidate._id === selectedUser._id
-                ? { ...candidate, role: selectedRole }
-                : candidate
-        )
-    );
-
-    try {
-      const { data } = await api.put(
-          `/users/${selectedUser._id}/role`,
-          { role: selectedRole }
-      );
-
-      if (!data.success && data.status !== 'success') {
-        throw new Error(data.message || 'Unable to update user role.');
+  const saveRole = async () => {
+      if (!selectedUser || selectedRole === selectedUser.role) {
+        closeUserModal();
+        return;
       }
 
-      const updatedUser = getUpdatedUser(data);
+      setIsSaving(true);
+      setModalError('');
 
-      if (updatedUser?._id) {
-        setUsers((currentUsers) =>
-            currentUsers.map((candidate) =>
-                candidate._id === selectedUser._id
-                    ? updatedUser
-                    : candidate
-            )
+      try {
+        const response = await updateRole(
+            selectedUser._id,
+            selectedRole
         );
+
+        if (!response?.success) {
+          throw new Error(
+              response?.message || 'Unable to update user role.'
+          );
+        }
+
+        setFeedback({
+          type: 'success',
+          message: `${selectedUser.name}'s role was updated as ${selectedRole}.`,
+        });
+        getAllUsers();
+        closeUserModal();
+      } catch (error) {
+        setModalError(
+            error?.response?.data?.message ||
+            error?.message ||
+            'Unable to update user role.'
+        );
+      } finally {
+        setIsSaving(false);
       }
-
-      setFeedback({
-        type: 'success',
-        message: `${selectedUser.name}'s role was updated.`,
-      });
-
-      closeUserModal();
-    } catch (error) {
-      setUsers(previousUsers);
-
-      setModalError(
-          error.response?.data?.message ||
-          error.message ||
-          'Unable to update user role.'
-      );
-    } finally {
-      setIsSaving(false);
-    }
   };
 
   const removeUser = async () => {
@@ -195,13 +162,7 @@ const UserManagement = () => {
     setModalError('');
 
     try {
-      await api.delete(`/users/${selectedUser._id}`);
-
-      setUsers((currentUsers) =>
-          currentUsers.filter(
-              (candidate) => candidate._id !== selectedUser._id
-          )
-      );
+      await deleteUser(selectedUser._id);
 
       setFeedback({
         type: 'success',
@@ -509,7 +470,7 @@ const UserManagement = () => {
                     <Button
                         type="button"
                         loading={isSaving}
-                        onClick={updateRole}
+                        onClick={saveRole}
                         disabled={selectedRole === selectedUser.role}
                         icon={<Icon name="check" size={16} />}
                     >

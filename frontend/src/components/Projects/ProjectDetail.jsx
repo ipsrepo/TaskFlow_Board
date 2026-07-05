@@ -225,7 +225,11 @@ const ProjectDetail = () => {
     const {id: projectId} = useParams();
     const navigate = useNavigate();
 
-    const {user} = useAuth();
+    const {
+        allUsers: users = [],
+        user,
+        getAllUsers,
+    } = useAuth();
 
     const {
         fetchProject,
@@ -237,7 +241,6 @@ const ProjectDetail = () => {
     const {fetchKanban} = useTask();
 
     const [project, setProject] = useState(null);
-    const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     const [isEditOpen, setIsEditOpen] = useState(false);
@@ -335,27 +338,11 @@ const ProjectDetail = () => {
 
     useEffect(() => {
         let isMounted = true;
-
-        const loadUsers = async () => {
-            try {
-                const {data} = await api.get('/users');
-
-                if (isMounted) {
-                    setUsers(data.users || data.data || []);
-                }
-            } catch {
-                if (isMounted) {
-                    setUsers([]);
-                }
-            }
-        };
-
-        loadUsers();
-
+        getAllUsers();
         return () => {
             isMounted = false;
         };
-    }, []);
+    }, [getAllUsers]);
 
     const projectLeadId = getUserId(project?.leadId);
 
