@@ -12,9 +12,7 @@ exports.getProjectbasedId = async (id) => {
 
 exports.sendSuccess = (res, data, message = 'success', statusCode = 200) => {
     return res.status(statusCode).json({
-        success: true,
-        message,
-        ...data,
+        success: true, message, ...data,
     });
 };
 
@@ -24,21 +22,25 @@ exports.saveAndPopulate = async (project, populate = 'leadId members') => {
     return project;
 };
 
+
 exports.getStatusBoard = (project, boardName) => {
-    const board = project.statusBoards.find(
-        b => b.name.toLowerCase() === boardName.toLowerCase()
-    );
-    if (!board) return res.status(404).json({success: false, message: 'Status board not found'});
+    const board = project.statusBoards.find((board) => board.name.toLowerCase() === boardName.toLowerCase());
+
+    if (!board) {
+        throw new AppError('Status board not found', 404);
+    }
+
     return board;
 };
 
-exports.filterObj = (body, ...filteredKeys) => {
-    const newObj = {};
-    Object.keys(body).forEach((key) => {
-        if (filteredKeys.includes(key)) {
-            newObj[key] = body[key];
+exports.filterObj = (obj, ...allowedFields) => {
+    const filteredObj = {};
+
+    Object.keys(obj).forEach((key) => {
+        if (allowedFields.includes(key)) {
+            filteredObj[key] = obj[key];
         }
     });
 
-    return body;
+    return filteredObj;
 };

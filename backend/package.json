@@ -13,7 +13,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "build": "node server.js"
+    "build": "node server.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --runInBand"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -36,7 +39,22 @@
   },
   "devDependencies": {
     "eslint": "^10.1.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "controllers/**/*.js",
+      "utils/**/*.js",
+      "!controllers/mailController.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
