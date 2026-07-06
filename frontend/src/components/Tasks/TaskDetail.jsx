@@ -64,6 +64,7 @@ const TaskDetail = () => {
 
     const {
         tasks = [],
+        currentTask: task = {},
         fetchTask,
         deleteTask,
         addComment,
@@ -104,10 +105,6 @@ const TaskDetail = () => {
         loadData();
     }, [loadData]);
 
-    const task = useMemo(
-        () => tasks.find((item) => getId(item) === taskId) || null,
-        [tasks, taskId]
-    );
 
     const project = useMemo(() => {
         const currentProjectId = getId(task?.projectId);
@@ -196,9 +193,7 @@ const TaskDetail = () => {
     const comments = useMemo(() => {
         return (task?.comments || [])
             .map((item) => {
-                const author = usersById.get(
-                    getId(item.userId || item.user || item.createdBy)
-                );
+                const author = item.userId;
 
                 return author ? {...item, author} : null;
             })

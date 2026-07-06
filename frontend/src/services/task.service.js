@@ -35,7 +35,7 @@ export const createTask = (taskData) =>
 
 export const updateTask = (id, taskData) =>
     requestHandler(() =>
-        api.put(`${API}/${id}`, taskData)
+        api.patch(`${API}/${id}`, taskData)
     );
 
 export const updateTaskStatus = (id, status) =>
