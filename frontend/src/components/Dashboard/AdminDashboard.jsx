@@ -23,13 +23,18 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         const loadDashboard = async () => {
-            const [, userResponse] = await Promise.all([fetchProjects(), getAllUsers()]);
+            await Promise.all([fetchProjects(), getAllUsers()]);
         };
         loadDashboard();
     }, [fetchProjects]);
 
     const activeProjects = useMemo(() => projects.filter((project) => project.status === 'active').length, [projects]);
     const admins = useMemo(() => users.filter((candidate) => candidate.role === 'admin').length, [users]);
+
+    const getLeadDetails = (id) =>{
+        const usr= users.find((user) => user.id === id);
+        return usr.name || '';
+    }
 
     return (
         <div className="page-container space-y-7">
@@ -65,7 +70,7 @@ const AdminDashboard = () => {
                                 <p className="mt-2 line-clamp-2 text-sm leading-5 text-muted">{project.description || 'No description yet.'}</p>
                                 <div className="mt-4 flex items-center gap-2 text-xs text-muted"><Avatar
                                     user={project.leadId} size="xs"/><span
-                                    className="truncate">{project.leadId?.name || 'Project lead'}</span></div>
+                                    className="truncate">{getLeadDetails(project.leadId) || 'Project lead'}</span></div>
                             </Card></Link>)}</div> : <div className="panel"><EmptyState title="No projects yet"
                                                                                         description="Projects will appear here once teams create them."
                                                                                         icon="folder"/></div>}</div>

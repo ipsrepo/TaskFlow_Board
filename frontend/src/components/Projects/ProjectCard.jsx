@@ -133,10 +133,10 @@ const ProjectCard = ({project}) => {
                                 <Avatar user={project.leadId} size="xs"/>
 
                                 <div className="min-w-0">
-                                    <p className="text-[11px] text-muted">Project admin</p>
-                                    <p className="max-w-[125px] truncate text-xs font-semibold text-secondary">
-                                        {project.leadId?.name || 'Unassigned'}
-                                    </p>
+                                    <p className="text-[11px] text-muted">Project Lead</p>
+                                    {/*<p className="max-w-[125px] truncate text-xs font-semibold text-secondary">*/}
+                                    {/*    {project.leadId?.name || 'Unassigned'}*/}
+                                    {/*</p>*/}
                                 </div>
                             </div>
 
