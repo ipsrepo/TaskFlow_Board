@@ -1,9 +1,9 @@
-import { createContext, useCallback, useState } from "react";
+import {createContext, useCallback, useState} from "react";
 import * as statusBoardService from "../services/statusBoard.service";
 
 export const StatusBoardContext = createContext(null);
 
-export const StatusBoardProvider = ({ children }) => {
+export const StatusBoardProvider = ({children}) => {
     const [statusBoards, setStatusBoards] = useState([]);
 
     const fetchStatusBoards = useCallback(async (projectId) => {

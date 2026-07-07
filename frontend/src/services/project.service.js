@@ -20,7 +20,7 @@ export const deleteProject = (id) =>
 
 export const addMember = (projectId, userId) =>
     requestHandler(() =>
-        api.post(`${API}/${projectId}/members`, { userId })
+        api.post(`${API}/${projectId}/members`, {userId})
     );
 
 export const removeMember = (projectId, userId) =>

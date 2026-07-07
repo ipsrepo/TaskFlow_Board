@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import {createBrowserRouter, Navigate} from "react-router-dom";
 
 import AppLayout from "../layouts/AppLayout";
 import ProtectedRoute from "../components/Common/ProtectedRoute";
@@ -19,62 +19,62 @@ import UserManagement from "../components/Tasks/UserManagement";
 export const router = createBrowserRouter([
     {
         path: "/login",
-        element: <Login />
+        element: <Login/>
     },
     {
         path: "/register",
-        element: <Register />
+        element: <Register/>
     },
 
     {
-        element: <ProtectedRoute />,
+        element: <ProtectedRoute/>,
         children: [
             {
-                element: <AppLayout />,
+                element: <AppLayout/>,
                 children: [
                     {
                         path: "/dashboard",
-                        element: <SmartDashboard />
+                        element: <SmartDashboard/>
                     },
                     {
                         path: "/my-tasks",
-                        element: <TaskList myTasks />
+                        element: <TaskList myTasks/>
                     },
                     {
                         path: "/projects",
-                        element: <ProjectList />
+                        element: <ProjectList/>
                     },
                     {
                         path: "/projects/:id",
-                        element: <ProjectDetail />
+                        element: <ProjectDetail/>
                     },
                     {
                         path: "/board",
-                        element: <BoardProjectSelector />
+                        element: <BoardProjectSelector/>
                     },
                     {
                         path: "/board/:id",
-                        element: <KanbanBoard />
+                        element: <KanbanBoard/>
                     },
                     {
                         path: "/projects/:projectId/tasks",
-                        element: <TaskList />
+                        element: <TaskList/>
                     },
                     {
                         path: "/tasks/:id",
-                        element: <TaskDetail />
+                        element: <TaskDetail/>
                     },
                     {
                         path: "/profile",
-                        element: <UserProfile />
+                        element: <UserProfile/>
                     },
 
                     {
-                        element: <ProtectedRoute roles={['admin']} />,
+                        element: <ProtectedRoute roles={['admin']}/>,
                         children: [
                             {
                                 path: "/users",
-                                element: <UserManagement />
+                                element: <UserManagement/>
                             }
                         ]
                     }
@@ -86,10 +86,10 @@ export const router = createBrowserRouter([
     // Fallback routes
     {
         path: "/",
-        element: <Navigate to="/dashboard" replace />
+        element: <Navigate to="/dashboard" replace/>
     },
     {
         path: "*",
-        element: <Navigate to="/dashboard" replace />
+        element: <Navigate to="/dashboard" replace/>
     }
 ]);

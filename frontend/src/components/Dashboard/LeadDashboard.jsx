@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
+import {useEffect, useMemo, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {formatDistanceToNow} from 'date-fns';
 import useAuth from '../../hooks/useAuth';
 import useProject from '../../hooks/useProject';
 import useTask from '../../hooks/useTask';
@@ -8,7 +8,7 @@ import Badge from '../UI/Badge';
 import Card from '../UI/Card';
 import EmptyState from '../UI/EmptyState';
 import Icon from '../UI/Icon';
-import { CardSkeleton } from '../UI/Loading';
+import {CardSkeleton} from '../UI/Loading';
 import StatCard from '../UI/StatCard';
 
 const priorityVariants = {
@@ -20,9 +20,9 @@ const priorityVariants = {
 const getUserId = (value) => value?._id || value || '';
 
 const LeadDashboard = () => {
-    const { user } = useAuth();
-    const { getMyTasks } = useTask();
-    const { fetchProjects, projects } = useProject();
+    const {user} = useAuth();
+    const {getMyTasks} = useTask();
+    const {fetchProjects, projects} = useProject();
 
     const [myTasks, setMyTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -107,8 +107,8 @@ const LeadDashboard = () => {
 
             {isLoading ? (
                 <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-                    {Array.from({ length: 5 }, (_, index) => (
-                        <CardSkeleton key={index} />
+                    {Array.from({length: 5}, (_, index) => (
+                        <CardSkeleton key={index}/>
                     ))}
                 </div>
             ) : (
@@ -162,14 +162,14 @@ const LeadDashboard = () => {
                         className="inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline"
                     >
                         View all
-                        <Icon name="arrowRight" size={16} />
+                        <Icon name="arrowRight" size={16}/>
                     </Link>
                 </div>
 
                 {isLoading ? (
                     <div className="space-y-3">
-                        {Array.from({ length: 3 }, (_, index) => (
-                            <CardSkeleton key={index} />
+                        {Array.from({length: 3}, (_, index) => (
+                            <CardSkeleton key={index}/>
                         ))}
                     </div>
                 ) : activeTasks.length ? (
@@ -222,7 +222,7 @@ const LeadDashboard = () => {
                             ? 'Overdue'
                             : `Due ${formatDistanceToNow(
                                 new Date(task.deadline),
-                                { addSuffix: true }
+                                {addSuffix: true}
                             )}`
                         : 'No due date'}
                   </span>
@@ -253,14 +253,14 @@ const LeadDashboard = () => {
                         className="inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline"
                     >
                         All projects
-                        <Icon name="arrowRight" size={16} />
+                        <Icon name="arrowRight" size={16}/>
                     </Link>
                 </div>
 
                 {isLoading ? (
                     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                        {Array.from({ length: 3 }, (_, index) => (
-                            <CardSkeleton key={index} />
+                        {Array.from({length: 3}, (_, index) => (
+                            <CardSkeleton key={index}/>
                         ))}
                     </div>
                 ) : leadProjects.length ? (
@@ -294,12 +294,12 @@ const LeadDashboard = () => {
 
                                     <div className="mt-4 flex items-center justify-between text-xs text-muted">
                     <span className="inline-flex items-center gap-1.5">
-                      <Icon name="users" size={14} />
+                      <Icon name="users" size={14}/>
                         {project.members?.length || 0} members
                     </span>
 
                                         <span className="inline-flex items-center gap-1">
-                      <Icon name="target" size={14} />
+                      <Icon name="target" size={14}/>
                       Lead
                     </span>
                                     </div>
@@ -328,8 +328,8 @@ const LeadDashboard = () => {
 
                 {isLoading ? (
                     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                        {Array.from({ length: 3 }, (_, index) => (
-                            <CardSkeleton key={index} />
+                        {Array.from({length: 3}, (_, index) => (
+                            <CardSkeleton key={index}/>
                         ))}
                     </div>
                 ) : memberProjects.length ? (
@@ -362,7 +362,7 @@ const LeadDashboard = () => {
                                     </p>
 
                                     <div className="mt-4 flex items-center gap-1.5 text-xs text-muted">
-                                        <Icon name="users" size={14} />
+                                        <Icon name="users" size={14}/>
                                         {project.members?.length || 0} members
                                     </div>
                                 </Card>

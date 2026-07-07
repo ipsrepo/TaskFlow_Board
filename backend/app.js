@@ -8,6 +8,7 @@ const userRouter = require('./routes/userRoutes');
 const projectRouter = require('./routes/projectRoutes');
 const taskRouter = require('./routes/taskRoutes');
 const AppError = require("./utils/appError");
+const genericErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
@@ -17,13 +18,21 @@ app.use(helmet()); // It'll produce middleware function and add it to here
 
 app.use(morgan('dev'));
 
-// Limiter Middleware
-const limiter = rateLimit({
-  max: 3,
-  windowM: 60 * 60 * 1000,
-  message: `Too many request from this IP, try after sometime`,
-});
+// Handle CORS error
+app.use(cors());
 
+// Rate Limiter
+const limiter = rateLimit({
+    max: 3,
+    windowMs: 60 * 60 * 1000,
+    handler: (req, res) => {
+        return res.status(429).json({
+            success: false,
+            status: 'failed',
+            message: 'Too many requests from this IP. Please try again later.',
+        });
+    },
+});
 // app.use('/api', limiter); // For all API call
 app.use('/api/v1/users/login', limiter); // For login only
 
@@ -48,8 +57,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Handle CORS error
-app.use(cors());
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -70,6 +78,6 @@ app.all('/{*any}', (req, res, next) => {
   );
 });
 
-// app.use(genericErrorHandler);
+app.use(genericErrorHandler);
 
 module.exports = app;

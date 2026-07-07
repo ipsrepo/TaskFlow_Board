@@ -4,12 +4,12 @@ import LeadDashboard from './LeadDashboard';
 import MemberDashboard from './MemberDashboard';
 
 const SmartDashboard = () => {
-    const { user } = useAuth();
+    const {user} = useAuth();
 
-    if (user?.role === 'admin') return <AdminDashboard />;
-    if (user?.role === 'lead') return <LeadDashboard />;
+    if (user?.role === 'admin') return <AdminDashboard/>;
+    if (user?.role === 'lead') return <LeadDashboard/>;
 
-    return <MemberDashboard />;
+    return <MemberDashboard/>;
 };
 
 export default SmartDashboard;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import useAuth from '../../hooks/useAuth';
 import useProject from '../../hooks/useProject';
 import useTask from '../../hooks/useTask';
@@ -10,9 +10,9 @@ import Modal from '../UI/Modal';
 import Select from '../UI/Select';
 
 const priorityOptions = [
-    { value: 'low', label: 'Low priority' },
-    { value: 'medium', label: 'Medium priority' },
-    { value: 'high', label: 'High priority' },
+    {value: 'low', label: 'Low priority'},
+    {value: 'medium', label: 'Medium priority'},
+    {value: 'high', label: 'High priority'},
 ];
 
 const getId = (value) => {
@@ -31,9 +31,9 @@ const TaskForm = ({
                       defaultStatus = 'todo',
                       statusBoards = [],
                   }) => {
-    const { allUsers: users = [], getAllUsers } = useAuth();
-    const { projects = [], fetchProjects } = useProject();
-    const { createTask, updateTask } = useTask();
+    const {allUsers: users = [], getAllUsers} = useAuth();
+    const {projects = [], fetchProjects} = useProject();
+    const {createTask, updateTask} = useTask();
 
     const isEditing = Boolean(task);
     const resolvedProjectId =
@@ -106,7 +106,7 @@ const TaskForm = ({
     }, [boards]);
 
     const updateValue = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
 
         setFormValues((current) => ({
             ...current,
@@ -258,7 +258,7 @@ const TaskForm = ({
                     <Button
                         type="submit"
                         loading={isSubmitting}
-                        icon={<Icon name="check" size={17} />}
+                        icon={<Icon name="check" size={17}/>}
                     >
                         {isEditing ? 'Save changes' : 'Create task'}
                     </Button>

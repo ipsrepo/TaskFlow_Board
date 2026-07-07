@@ -86,7 +86,8 @@ const MemberDashboard = () => {
                 {isLoading ?
                     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{Array.from({length: 3}, (_, index) =>
                         <CardSkeleton key={index}/>)}</div> : myProjects.length ?
-                        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{myProjects.slice(0, 6).map((project) =>
+                        <div
+                            className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{myProjects.slice(0, 6).map((project) =>
                             <Link key={project._id} to={`/projects/${project._id}`}><Card hover className="h-full p-5">
                                 <div className="flex items-start justify-between gap-3"><h3
                                     className="min-w-0 truncate text-sm font-semibold text-secondary">{project.name}</h3>

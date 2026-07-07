@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {useEffect, useMemo, useState} from 'react';
+import {Navigate, useNavigate} from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useProject from '../../hooks/useProject';
 import Avatar from '../UI/Avatar';
@@ -24,8 +24,8 @@ const getStatusLabel = (status) => {
 
 const BoardProjectSelector = () => {
     const navigate = useNavigate();
-    const { user } = useAuth();
-    const { projects, fetchProjects } = useProject();
+    const {user} = useAuth();
+    const {projects, fetchProjects} = useProject();
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
@@ -98,11 +98,11 @@ const BoardProjectSelector = () => {
     }, [accessibleProjects, isLoading, navigate]);
 
     if (user && !canAccessBoard) {
-        return <Navigate to="/dashboard" replace />;
+        return <Navigate to="/dashboard" replace/>;
     }
 
     if (isLoading) {
-        return <Loading fullScreen text="Loading project boards..." />;
+        return <Loading fullScreen text="Loading project boards..."/>;
     }
 
     if (error) {
@@ -116,7 +116,7 @@ const BoardProjectSelector = () => {
                         <Button
                             variant="outline"
                             onClick={() => navigate('/projects')}
-                            icon={<Icon name="folder" size={17} />}
+                            icon={<Icon name="folder" size={17}/>}
                         >
                             View projects
                         </Button>
@@ -137,7 +137,7 @@ const BoardProjectSelector = () => {
                         <Button
                             variant="outline"
                             onClick={() => navigate('/projects')}
-                            icon={<Icon name="folder" size={17} />}
+                            icon={<Icon name="folder" size={17}/>}
                         >
                             View projects
                         </Button>
@@ -148,7 +148,7 @@ const BoardProjectSelector = () => {
     }
 
     if (accessibleProjects.length === 1) {
-        return <Loading fullScreen text="Opening project board..." />;
+        return <Loading fullScreen text="Opening project board..."/>;
     }
 
     return (
@@ -157,8 +157,9 @@ const BoardProjectSelector = () => {
                 <p className="section-label">Workspace</p>
 
                 <div className="mt-1 flex items-start gap-3">
-          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary">
-            <Icon name="columns" size={20} />
+          <span
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary">
+            <Icon name="columns" size={20}/>
           </span>
 
                     <div>
@@ -186,8 +187,9 @@ const BoardProjectSelector = () => {
                             className="group rounded-2xl border border-line bg-surface p-5 text-left shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                         >
                             <div className="flex items-start justify-between gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary">
-                  <Icon name="columns" size={21} />
+                <span
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary">
+                  <Icon name="columns" size={21}/>
                 </span>
 
                                 <Badge
@@ -208,20 +210,22 @@ const BoardProjectSelector = () => {
                             </p>
 
                             <div className="mt-5 flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-surfaceSubtle px-2.5 py-1 text-[11px] font-semibold text-muted">
-                  <Icon name="columns" size={13} />
+                <span
+                    className="inline-flex items-center gap-1.5 rounded-full bg-surfaceSubtle px-2.5 py-1 text-[11px] font-semibold text-muted">
+                  <Icon name="columns" size={13}/>
                     {boardCount} {boardCount === 1 ? 'stage' : 'stages'}
                 </span>
 
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-surfaceSubtle px-2.5 py-1 text-[11px] font-semibold text-muted">
-                  <Icon name="users" size={13} />
+                                <span
+                                    className="inline-flex items-center gap-1.5 rounded-full bg-surfaceSubtle px-2.5 py-1 text-[11px] font-semibold text-muted">
+                  <Icon name="users" size={13}/>
                                     {memberCount} {memberCount === 1 ? 'member' : 'members'}
                 </span>
                             </div>
 
                             <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
                                 <div className="flex min-w-0 items-center gap-2">
-                                    <Avatar user={project.leadId} size="xs" />
+                                    <Avatar user={project.leadId} size="xs"/>
 
                                     <div className="min-w-0">
                                         <p className="text-[11px] text-muted">
@@ -234,9 +238,10 @@ const BoardProjectSelector = () => {
                                     </div>
                                 </div>
 
-                                <span className="flex items-center gap-1 text-xs font-semibold text-primary transition-transform group-hover:translate-x-0.5">
+                                <span
+                                    className="flex items-center gap-1 text-xs font-semibold text-primary transition-transform group-hover:translate-x-0.5">
                   Open board
-                  <Icon name="arrowRight" size={14} />
+                  <Icon name="arrowRight" size={14}/>
                 </span>
                             </div>
                         </button>

@@ -31,8 +31,8 @@ const AdminDashboard = () => {
     const activeProjects = useMemo(() => projects.filter((project) => project.status === 'active').length, [projects]);
     const admins = useMemo(() => users.filter((candidate) => candidate.role === 'admin').length, [users]);
 
-    const getLeadDetails = (id) =>{
-        const usr= users.find((user) => user.id === id);
+    const getLeadDetails = (id) => {
+        const usr = users.find((user) => user.id === id);
         return usr.name || '';
     }
 

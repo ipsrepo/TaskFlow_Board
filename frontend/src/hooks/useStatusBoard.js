@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { StatusBoardContext } from "../context/StatusBoardContext";
+import {useContext} from "react";
+import {StatusBoardContext} from "../context/StatusBoardContext";
 
 const useStatusBoard = () => {
     const ctx = useContext(StatusBoardContext);

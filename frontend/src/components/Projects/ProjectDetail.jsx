@@ -4,7 +4,6 @@ import {format} from 'date-fns';
 import useAuth from '../../hooks/useAuth';
 import useProject from '../../hooks/useProject';
 import useTask from '../../hooks/useTask';
-import api from '../../utils/api';
 import Alert from '../UI/Alert';
 import Avatar from '../UI/Avatar';
 import Badge from '../UI/Badge';
@@ -582,19 +581,18 @@ const ProjectDetail = () => {
                                 >
                                     Workflow
                                 </Button>
-                              <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => setIsEditOpen(true)}
-                                  icon={<Icon name="edit" size={16}/>}
-                              >
-                                Edit
-                              </Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setIsEditOpen(true)}
+                                    icon={<Icon name="edit" size={16}/>}
+                                >
+                                    Edit
+                                </Button>
 
 
                                 {isAdmin && (
                                     <>
-
 
 
                                         <button
@@ -947,7 +945,7 @@ const ProjectDetail = () => {
                                         </div>
 
                                         <Badge variant={'success'}>
-                      {candidate.role}
+                                            {candidate.role}
                                         </Badge>
 
                                         <Button
