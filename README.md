@@ -8,10 +8,10 @@ The application uses a MERN-based architecture with React on the frontend, Expre
 
 ## Live Application
 
-- **Backend API:** `https://task-flow-pi-lac.vercel.app/api/v1`
-- **GitHub Repository:** `https://github.com/ipsrepo/TaskFlow_Board`
 
-> Add your deployed frontend URL here before final submission.
+- **Live Site:** `[https://task-flow-pi-lac.vercel.app/](https://taskflowboardapp.netlify.app/)`
+- **Backend API:** [`https://task-flow-pi-lac.vercel.app/`](https://task-flow-pi-lac.vercel.app/)
+- **GitHub Repository:** `https://github.com/ipsrepo/TaskFlow_Board`
 
 ---
 
@@ -726,32 +726,6 @@ nvm install 20.9.0
 nvm use 20.9.0
 ```
 
-### Status Board Error During Testing
-
-A test originally failed because the helper function for finding a project status board attempted to return an Express response object even though it was not inside a route controller. This caused a `ReferenceError` because `res` was not defined.
-
-The incorrect approach looked similar to this:
-
-```js
-if (!board) {
-  return res.status(404).json({
-    success: false,
-    message: "Status board not found"
-  });
-}
-```
-
-**Resolution:**  
-The helper function was corrected to throw an `AppError` instead. The controller error-handling flow can then handle the error correctly.
-
-```js
-if (!board) {
-  throw new AppError("Status board not found", 404);
-}
-```
-
-This fixed the test failure and improved separation of concerns. Utility functions should return data or throw errors; they should not directly send HTTP responses.
-
 ### Frontend and Backend Response Shape Differences
 
 Some frontend functions expected data in different response structures, such as:
@@ -799,16 +773,30 @@ The better long-term solution is to standardise all backend API responses so eve
 
 ---
 
-## Author
+## Screens
 
-**Prakash**  
-TaskFlow Board  
-MSc Web Development for Information Systems
+### Login Page
+<img width="2097" height="1712" alt="image" src="https://github.com/user-attachments/assets/cf1da0d7-066f-4332-ba45-9a349ace72a5" />
+
+### Signup Page
+<img width="2096" height="1709" alt="image" src="https://github.com/user-attachments/assets/ff1d61cb-07f2-4e2a-bdd8-2aab6d04f97a" />
+
+
+### Dashboard - Admin
+<img width="2097" height="1711" alt="image" src="https://github.com/user-attachments/assets/3a4a683c-fe8b-4adf-b3eb-7e8ce2c388dd" />
+
+
+### Test Running - FrontEnd
+<img width="1308" height="714" alt="Screenshot 2026-07-07 210128" src="https://github.com/user-attachments/assets/4db467ac-d92f-4bcb-9d94-f2a8924c1040" />
+
+### Test Running - Backend
+<img width="1318" height="1125" alt="Screenshot 2026-07-07 210256" src="https://github.com/user-attachments/assets/75c9b607-7c33-41ed-ab72-61fb0c13b859" />
+
+
+
 
 ---
 
-## Academic Note
+## Author
 
-This project was created for the B9IS130 Web Development for Information Systems continuous assessment.
-
-All third-party libraries, frameworks, and documentation used in the project should be acknowledged in the technical report and reference list.
+**Prakash**  
