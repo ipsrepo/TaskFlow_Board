@@ -792,10 +792,73 @@ The better long-term solution is to standardise all backend API responses so eve
 ### Test Running - Backend
 <img width="1318" height="1125" alt="Screenshot 2026-07-07 210256" src="https://github.com/user-attachments/assets/75c9b607-7c33-41ed-ab72-61fb0c13b859" />
 
-
-
-
 ---
+
+# References
+
+Anderson, D.J. (2010) *Kanban: Successful Evolutionary Change for Your Technology Business*. Sequim, WA: Blue Hole Press.
+
+Axios (n.d.) *Interceptors*. Available at: https://axios-http.com/docs/interceptors (Accessed: 7 July 2026).
+
+Bass, L., Clements, P. and Kazman, R. (2021) *Software Architecture in Practice*. 4th edn. Boston: Addison-Wesley.
+
+Codevolution (n.d.) *Codevolution YouTube channel*. Available at: https://www.youtube.com/@Codevolution (Accessed: 7 July 2026).
+
+DEV Community (n.d.) *DEV Community - A space where coders share, stay up-to-date and grow their careers*. Available at: https://dev.to/ (Accessed: 7 July 2026).
+
+dnd kit (n.d.) *dnd kit documentation*. Available at: https://docs.dndkit.com/ (Accessed: 7 July 2026).
+
+Express.js (n.d.-a) *Using middleware*. Available at: https://expressjs.com/en/guide/using-middleware.html (Accessed: 7 July 2026).
+
+Express.js (n.d.-b) *Production Best Practices: Security*. Available at: https://expressjs.com/en/advanced/best-practice-security/ (Accessed: 7 July 2026).
+
+Fielding, R.T. (2000) *Architectural Styles and the Design of Network-Based Software Architectures*. Doctoral dissertation. University of California, Irvine.
+
+Jest (n.d.) *Getting Started*. Available at: https://jestjs.io/docs/getting-started (Accessed: 7 July 2026).
+
+Jones, M., Bradley, J. and Sakimura, N. (2015) *JSON Web Token (JWT)*, RFC 7519. Available at: https://www.rfc-editor.org/info/rfc7519 (Accessed: 7 July 2026).
+
+MDN Web Docs (2025) *Cross-Origin Resource Sharing (CORS)*. Available at: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS (Accessed: 7 July 2026).
+
+MongoDB (n.d.) *Troubleshoot Connection Issues - Atlas*. Available at: https://www.mongodb.com/docs/atlas/troubleshoot-connection/ (Accessed: 7 July 2026).
+
+Mongoose (n.d.-a) *Validation*. Available at: https://mongoosejs.com/docs/validation.html (Accessed: 7 July 2026).
+
+Mongoose (n.d.-b) *Query Population*. Available at: https://mongoosejs.com/docs/populate.html (Accessed: 7 July 2026).
+
+Mostovoy, N. (2022) 'JavaScript Promises #1: how promises work', *DEV Community*, 1 August. Available at: https://dev.to/xnimorz/101-series-promises-1-how-promises-work-1k1i (Accessed: 7 July 2026).
+
+NamasteDev (n.d.) *Namaste JavaScript*. Available at: https://namastedev.com/learn/namaste-javascript (Accessed: 7 July 2026).
+
+Node.js (n.d.) *About Node.js*. Available at: https://nodejs.org/en/about (Accessed: 7 July 2026).
+
+nvm-sh (n.d.) *nvm: Node Version Manager*. Available at: https://github.com/nvm-sh/nvm (Accessed: 7 July 2026).
+
+OWASP Foundation (2025) *OWASP Top 10: 2025*. Available at: https://owasp.org/Top10/2025/ (Accessed: 7 July 2026).
+
+React (n.d.) *Passing Data Deeply with Context*. Available at: https://react.dev/learn/passing-data-deeply-with-context (Accessed: 7 July 2026).
+
+React Router (n.d.) *React Router documentation*. Available at: https://reactrouter.com/ (Accessed: 7 July 2026).
+
+Schmedtmann, J. (2024) *Node.js, Express, MongoDB & More: The Complete Bootcamp*. Udemy. Available at: https://www.udemy.com/share/101Ycs3@NmBkVZskuj--ZmjQ10ZzAc-up6u0L8QWMFtqpji4Y46r3cai7PJ2E8uPs03jwV2XCA==/ (Accessed: 7 July 2026).
+
+Schmedtmann, J. (2025) *The Complete JavaScript Course 2025: From Zero to Expert!* Udemy. Available at: https://www.udemy.com/share/101WeY3@6EzKWFH_DKp2_H1a0oRUDsnBEK-IH0XnfKcv647-HfT3vtVrI1Hq3OS0sFsJMOJl3g==/ (Accessed: 7 July 2026).
+
+Schwarzmüller, M. (n.d.) *React - The Complete Guide (incl. Next.js, Redux)*. Udemy. Available at: https://www.udemy.com/share/101Way3@-9HMmZgciL-HSe5iHbRw5lo3rjXaTZDchkU6g0_cAY1vR__jfH9cafN5sAWW0lRTpQ==/ (Accessed: 7 July 2026).
+
+Steele, C. (2026) *JavaScript Algorithms and Data Structures Masterclass*. Udemy. Available at: https://www.udemy.com/share/101XY23@55PuLo_I4tfWM-z05MRwuPbMd8hlDHzm1oMNoXqmWIC3DJCZnOXT79eVTNvyNRn3yA==/ (Accessed: 7 July 2026).
+
+Tailwind Labs (n.d.) *Responsive design - Core concepts*. Available at: https://tailwindcss.com/docs/responsive-design (Accessed: 7 July 2026).
+
+Testing Library (2020) *Guiding Principles*. Available at: https://testing-library.com/docs/guiding-principles/ (Accessed: 7 July 2026).
+
+Vercel (2026) *Using the Node.js Runtime with Vercel Functions*. Available at: https://vercel.com/docs/functions/runtimes/node-js (Accessed: 7 July 2026).
+
+Vite (2026) *Env Variables and Modes*. Available at: https://vite.dev/guide/env-and-mode (Accessed: 7 July 2026).
+
+W3C (2024) *Web Content Accessibility Guidelines (WCAG) 2.2*. W3C Recommendation, 12 December. Available at: https://www.w3.org/TR/WCAG22/ (Accessed: 7 July 2026).
+
+----
 
 ## Author
 
