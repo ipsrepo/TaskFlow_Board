@@ -9,7 +9,7 @@ The application uses a MERN-based architecture with React on the frontend, Expre
 ## Live Application
 
 
-- **Live Site:** [`https://task-flow-pi-lac.vercel.app/`](https://taskflowboardapp.netlify.app/)
+- **Live Site:** [ (https://taskflowboardapp.netlify.app/)](https://taskflowboardapp.netlify.app/)
 - **Backend API:** [`https://task-flow-pi-lac.vercel.app/`](https://task-flow-pi-lac.vercel.app/)
 - **GitHub Repository:** `https://github.com/ipsrepo/TaskFlow_Board`
 
